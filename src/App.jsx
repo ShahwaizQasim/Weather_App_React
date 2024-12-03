@@ -1,17 +1,29 @@
 
 import { useState } from 'react';
 import './App.css'
+import axios from 'axios';
 
 function App() {
   const [weather, setWeather] = useState(0);
+  const [weatherData, setWeatherData] = useState();
   console.log('weather', weather);
 
-const fetchApi = () => {
-    
-}
+  const fetchWeather = async () => {
+    try {
+      const API_KEY = "0cddb8b14288b6d5d30fc7f9c60711ea";
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?
+        appid=${API_KEY}&units=metric&q=${weather}`);
+      console.log("response=>", response);
+      setWeatherData(response);
+
+    } catch (error) {
+      console.log("error", error);
+
+    }
+  }
 
   const handleClick = () => {
-    fetchApi();
+    fetchWeather();
   }
 
   return (
